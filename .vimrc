@@ -79,7 +79,6 @@ map <c-t>n :tabnew
 
 syntax on
 set paste
-set list
 
 " Clear trailing white spaces py files
 autocmd BufWritePre *.py :%s/\s\+$//e
@@ -95,6 +94,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'davidhalter/jedi'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'klen/python-mode'
+Bundle 'tpope/vim-fugitive'
 
 autocmd vimenter * NERDTree
 autocmd vimenter * wincmd p
