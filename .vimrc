@@ -13,8 +13,6 @@ set mouse=a
 
 set tabstop=4
 set shiftwidth=4
-set smarttab
-set expandtab
 set autoindent
 
 let mapleader = ","
@@ -24,13 +22,13 @@ let mapleader = ","
 set backspace=2
 set history=50
 set ruler
-"
-"  Content of the ruler string
-"
+""
+""  Content of the ruler string
+""
 set rulerformat=%l,%c%V%=#%n\ %3p%%
-"
-"  Show (partial) command in status line
-"
+""
+""  Show (partial) command in status line
+""
 set showcmd
 "
 "  When a bracket is inserted, briefly jump to the matching one
@@ -75,17 +73,8 @@ vmap ,u  U
 " change Vim's working directory to directory containing opened file
 autocmd BufWinEnter * if isdirectory(expand('%:p:h')) | lcd %:p:h | endif
 
-map <c-t>h :tabp<cr>
-map <c-t>j :tabr<cr>
-map <c-t>k :tabl<cr>
-map <c-t>l :tabn<cr>
-map <c-t>n :tabnew 
 
 syntax on
-set paste
-
-" Clear trailing white spaces py files
-autocmd BufWritePre *.py :%s/\s\+$//e
 au BufNewFile,BufRead *.less set filetype=css
 
 set rtp+=~/.vim/bundle/vundle/
@@ -96,14 +85,12 @@ Bundle 'FuzzyFinder'
 Bundle 'L9'
 
 Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-"Bundle 'davidhalter/jedi'
-"Bundle 'davidhalter/jedi-vim'
+Bundle 'davidhalter/jedi'
+Bundle 'davidhalter/jedi-vim'
+Bundle 'ervandew/supertab'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'klen/python-mode'
-"Bundle 'Lokaltog/powerline'
-"Bundle 'yodiaditya/vim-pydjango'
 
 let b:surround_{char2nr("v")} = "{{ \r }}"
 let b:surround_{char2nr("{")} = "{{ \r }}"
@@ -116,14 +103,13 @@ let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 
 autocmd vimenter * NERDTree
 autocmd vimenter * wincmd p
-
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 colorscheme torte
 
 let g:pymode_folding = 0
-let g:pymode_rope = 1
-let g:pymode_rope_vim_completion = 1
+let g:pymode_rope = 0
+
 
 " Documentation
 let g:pymode_doc = 1
@@ -147,5 +133,25 @@ let g:pymode_syntax = 1
 let g:pymode_syntax_all = 1
 let g:pymode_syntax_indent_errors = g:pymode_syntax_all
 let g:pymode_syntax_space_errors = g:pymode_syntax_all
-
+"
 autocmd BufRead *.html -c "set sw=2 | %s/>/>\r/ | execute 'normal gg=G' | set nohlsearch | g/^\\s*\$/d"
+
+" disable jedi docstring window
+autocmd FileType python setlocal completeopt-=preview
+
+function FindDjangoSettings()
+  if strlen($VIRTUAL_ENV) && has('python')
+    let output  = system("find $VIRTUAL_ENV \\( -wholename '*/lib/*' -or -wholename '*/install/' \\) -or \\( -name 'settings.py' -print0 \\) | tr '\n' ' '")
+    let outarray= split(output, '[\/]\+')
+    let module  = outarray[-2] . '.' . 'settings'
+    let syspath = system("python -c 'import sys; print sys.path' | tr '\n' ' ' ")
+    " let curpath = '/' . join(outarray[:-2], '/')
+
+    execute 'python import sys, os'
+    " execute 'python sys.path.append("' . curpath . '")'
+    " execute 'python sys.path.append("' . syspath . '")'
+    execute 'python sys.path = ' . syspath
+    execute 'python os.environ.setdefault("DJANGO_SETTINGS_MODULE", "' . module . '")'
+  endif
+endfunction
+autocmd FileType python call FindDjangoSettings()
