@@ -12,10 +12,11 @@ filetype plugin on
 set mouse=a
 
 set tabstop=4
-set shiftwidth=4
-set smarttab
 set expandtab
+set shiftwidth=4
 set autoindent
+filetype indent on
+set smartindent
 
 let mapleader = ","
 "
@@ -84,8 +85,6 @@ map <c-t>n :tabnew
 syntax on
 set paste
 
-" Clear trailing white spaces py files
-autocmd BufWritePre *.py :%s/\s\+$//e
 au BufNewFile,BufRead *.less set filetype=css
 
 set rtp+=~/.vim/bundle/vundle/
@@ -119,7 +118,7 @@ autocmd vimenter * wincmd p
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-colorscheme torte
+colorscheme evening
 
 let g:pymode_folding = 0
 let g:pymode_rope = 1
@@ -147,5 +146,23 @@ let g:pymode_syntax = 1
 let g:pymode_syntax_all = 1
 let g:pymode_syntax_indent_errors = g:pymode_syntax_all
 let g:pymode_syntax_space_errors = g:pymode_syntax_all
+"
+"  Edit .vimrc
+"
+nmap ,rc :n $HOME/dotfiles/.vimrc<CR>
+"
+"  Create new window below or on the right of current one
+"
+set splitbelow splitright
 
 autocmd BufRead *.html -c "set sw=2 | %s/>/>\r/ | execute 'normal gg=G' | set nohlsearch | g/^\\s*\$/d"
+
+" Commenting blocks of code.
+autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+autocmd FileType conf,fstab       let b:comment_leader = '# '
+autocmd FileType tex              let b:comment_leader = '% '
+autocmd FileType mail             let b:comment_leader = '> '
+autocmd FileType vim              let b:comment_leader = '" '
+noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
