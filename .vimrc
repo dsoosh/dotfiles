@@ -12,8 +12,11 @@ filetype plugin on
 set mouse=a
 
 set tabstop=4
+set expandtab
 set shiftwidth=4
 set autoindent
+filetype indent on
+set smartindent
 
 let mapleader = ","
 "
@@ -22,13 +25,13 @@ let mapleader = ","
 set backspace=2
 set history=50
 set ruler
-""
-""  Content of the ruler string
-""
+"
+"  Content of the ruler string
+"
 set rulerformat=%l,%c%V%=#%n\ %3p%%
-""
-""  Show (partial) command in status line
-""
+"
+"  Show (partial) command in status line
+"
 set showcmd
 "
 "  When a bracket is inserted, briefly jump to the matching one
@@ -105,7 +108,7 @@ autocmd vimenter * NERDTree
 autocmd vimenter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-colorscheme torte
+colorscheme evening
 
 let g:pymode_folding = 0
 let g:pymode_rope = 0
@@ -155,3 +158,22 @@ function FindDjangoSettings()
   endif
 endfunction
 autocmd FileType python call FindDjangoSettings()
+"  Edit .vimrc
+"
+nmap ,rc :n $HOME/dotfiles/.vimrc<CR>
+"
+"  Create new window below or on the right of current one
+"
+set splitbelow splitright
+
+autocmd BufRead *.html -c "set sw=2 | %s/>/>\r/ | execute 'normal gg=G' | set nohlsearch | g/^\\s*\$/d"
+
+" Commenting blocks of code.
+autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+autocmd FileType conf,fstab       let b:comment_leader = '# '
+autocmd FileType tex              let b:comment_leader = '% '
+autocmd FileType mail             let b:comment_leader = '> '
+autocmd FileType vim              let b:comment_leader = '" '
+noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
