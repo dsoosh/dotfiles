@@ -11,6 +11,8 @@ filetype plugin on
 
 set mouse=a
 
+set relativenumber
+
 set tabstop=4
 set expandtab
 set shiftwidth=4
@@ -165,8 +167,6 @@ nmap ,rc :n $HOME/dotfiles/.vimrc<CR>
 "  Create new window below or on the right of current one
 "
 set splitbelow splitright
-
-autocmd BufRead *.html -c "set sw=2 | %s/>/>\r/ | execute 'normal gg=G' | set nohlsearch | g/^\\s*\$/d"
 
 " Commenting blocks of code.
 autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
