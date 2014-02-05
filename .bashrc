@@ -124,5 +124,5 @@ export https_proxy=http://10.2.0.1:8080/
 
 function gslog {
     SVN_USER="dsuszcze"
-    git log -g --author=$SVN_USER --pretty=' - %gs: %s' git-svn|iconv -f UTF-8 -t $(locale charmap)
+    git log -g --author=$SVN_USER --pretty='%ci | %gs | %s' git-svn|iconv -f UTF-8 -t $(locale charmap)
 }
