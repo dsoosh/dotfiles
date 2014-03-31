@@ -6,8 +6,6 @@
 	co = checkout
 [core]
 	editor = vim
-[commit]
-	template = commit_template.txt
 [color]
 	diff = auto
 [http]

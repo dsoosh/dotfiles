@@ -56,21 +56,10 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
+source ~/.git-prompt.sh
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+PS1='($(date +%T))\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[38;5;190m\]$(__git_ps1)\[\033[0m\] '
+unset color_prompt force_color_prompt
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -124,5 +113,25 @@ export https_proxy=http://10.2.0.1:8080/
 
 function gslog {
     SVN_USER="dsuszcze"
-    git log -g --author=$SVN_USER --pretty='%ci | %gs | %s' git-svn|iconv -f UTF-8 -t $(locale charmap)
+    git log -g --author=$SVN_USER --pretty='%ci - %gs - %s' git-svn|iconv -f UTF-8 -t $(locale charmap) | tac
 }
+
+alias eclipse="/opt/eclipse/eclipse"
+alias asadmin="/opt/glassfish4/bin/asadmin"
+
+alias ta="task"
+
+function ticket() {
+    git branch | grep '^\*' | egrep -o '_.+' | cut -b2-
+}
+
+function commits_for_ticket() {
+    gslog | grep $(ticket)
+}
+
+function gitsvninfo() {
+    INFO=`cd .; git svn info`;
+    echo $?
+}
+
+
