@@ -109,8 +109,6 @@ alias jota-rawl='ssh www-rawlplug-test@jota'
 alias daps='sudo apt-cache search'
 alias dapi='sudo apt-get install'
 
-export https_proxy=http://10.2.0.1:8080/
-
 function gslog {
     SVN_USER="dsuszcze"
     git log -g --author=$SVN_USER --pretty='%ci - %gs - %s' git-svn|iconv -f UTF-8 -t $(locale charmap) | tac
@@ -134,4 +132,8 @@ function gitsvninfo() {
     echo $?
 }
 
+alias ecipse="UBUNTU_MENUPROXY= eclipse"
 
+function svn_diff() {
+    svn status | grep ^M | awk '{ print $2 }' | xargs svn diff
+}

@@ -11,7 +11,7 @@ filetype plugin on
 
 set mouse=a
 
-set relativenumber
+set number
 
 set tabstop=4
 set expandtab
@@ -89,13 +89,13 @@ Bundle 'gmarik/vundle'
 Bundle 'FuzzyFinder'
 Bundle 'L9'
 
-Bundle 'scrooloose/nerdtree'
 Bundle 'davidhalter/jedi'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'ervandew/supertab'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'klen/python-mode'
+Bundle 'Rykka/riv.vim'
 
 let b:surround_{char2nr("v")} = "{{ \r }}"
 let b:surround_{char2nr("{")} = "{{ \r }}"
@@ -106,9 +106,7 @@ let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
 let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
 let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 
-autocmd vimenter * NERDTree
 autocmd vimenter * wincmd p
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 colorscheme evening
 
@@ -175,3 +173,9 @@ autocmd FileType mail             let b:comment_leader = '> '
 autocmd FileType vim              let b:comment_leader = '" '
 noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+
+set nofoldenable
+set foldlevelstart=99
+
+let rst_project = {'path': '~/docs/'}
+let g:riv_projects = [rst_project]
