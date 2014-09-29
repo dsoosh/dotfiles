@@ -137,3 +137,5 @@ alias ecipse="UBUNTU_MENUPROXY= eclipse"
 function svn_diff() {
     svn status | grep ^M | awk '{ print $2 }' | xargs svn diff
 }
+
+set -o noclobber
