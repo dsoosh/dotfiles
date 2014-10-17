@@ -97,6 +97,8 @@ Bundle 'tpope/vim-surround'
 Bundle 'klen/python-mode'
 Bundle 'Rykka/riv.vim'
 
+Plugin 'chriskempson/base16-vim'
+
 let b:surround_{char2nr("v")} = "{{ \r }}"
 let b:surround_{char2nr("{")} = "{{ \r }}"
 let b:surround_{char2nr("%")} = "{% \r %}"
@@ -108,7 +110,8 @@ let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 
 autocmd vimenter * wincmd p
 
-colorscheme evening
+colorscheme base16-default
+set background=dark
 
 let g:pymode_folding = 0
 let g:pymode_rope = 0
@@ -179,3 +182,11 @@ set foldlevelstart=99
 
 let rst_project = {'path': '~/docs/'}
 let g:riv_projects = [rst_project]
+
+autocmd FileType python set colorcolumn=81
+
+" Some handy rst formatting remaps
+
+" underline current line with a dash
+nnoremap <F5> yyp<C-v>$r-
+inoremap <F5> <ESC>yyp<C-v>$r-A
