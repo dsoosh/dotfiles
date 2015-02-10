@@ -190,3 +190,5 @@ autocmd FileType python set colorcolumn=81
 " underline current line with a dash
 nnoremap <F5> yyp<C-v>$r-
 inoremap <F5> <ESC>yyp<C-v>$r-A
+
+autocmd FileType rst set textwidth=100

@@ -1,11 +1,28 @@
 [user]
-	email = dariusz.suszczewicz@koelner.pl
-	name = dsuszcze
+    email = dariusz.suszczewicz@rawlplug.com
+    name = Dariusz Suszczewicz
 [alias]
-	st = status
-	co = checkout
+    c = commit
+    st = status
+    co = checkout
+    di = diff
+    dc = diff --cached
+
+    ss = stash
+    sp = stash pop
+    sl = stash list
+    sa = stash apply
+
+    cp = cherry-pick
+    ri = rebase --interactive
+    rai = rebase --interactive --autosquash
+
+    fu = "!f() { git commit --fixup=$1; git show --name-only --oneline $1; }; f"
+
+    bra = branch
+    brad = branch -d
 [core]
-	editor = vim
+    editor = vim
 [color]
-	diff = auto
+    diff = auto
 [http]
