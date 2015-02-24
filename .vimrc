@@ -96,6 +96,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'klen/python-mode'
 Bundle 'Rykka/riv.vim'
+Bundle 'nvie/vim-rst-tables'
 
 Plugin 'chriskempson/base16-vim'
 
