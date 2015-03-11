@@ -82,10 +82,12 @@ autocmd BufWinEnter * if isdirectory(expand('%:p:h')) | lcd %:p:h | endif
 syntax on
 au BufNewFile,BufRead *.less set filetype=css
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+filetype off
 
-Bundle 'gmarik/vundle'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Bundle 'gmarik/Vundle.vim'
 Bundle 'FuzzyFinder'
 Bundle 'L9'
 
@@ -99,6 +101,10 @@ Bundle 'Rykka/riv.vim'
 Bundle 'nvie/vim-rst-tables'
 
 Plugin 'chriskempson/base16-vim'
+
+call vundle#end()
+
+filetype plugin indent on
 
 let b:surround_{char2nr("v")} = "{{ \r }}"
 let b:surround_{char2nr("{")} = "{{ \r }}"
